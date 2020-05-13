@@ -1,0 +1,57 @@
+{% extends "layout.jinja2" %}
+
+{% block content %}
+    <form method="post">
+        <div class="row gutters control-container">
+            <div class="col-3">
+                <div class="input-panel">
+                    <select name="voice" id="voice">
+                        <option value="0">Select Voice</option>
+                        {% for voice in voices %}
+                            <option value="{{ voice }}">{{ voice }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-3">
+                <a href="{{ url_for('main_bp.create') }}" class="btn-round">
+                    <img src="{{ url_for('static', filename='dist/img/head.png') }}">
+                    Create New Voice
+                </a>
+            </div>
+        </div>
+    </form>
+    <form method="post" id="form-text" name="form_text" action="{{ url_for('main_bp.speech_all') }}">
+        <div class="text-container">
+            <div class="text-panel">
+                <div id="main_text" class="main_text" contenteditable="true">
+                </div>
+            </div>
+            <div class="control-panel">
+                <button class="btn btn-main">
+                    <img src="{{ url_for('static', filename='dist/img/play.png') }}">
+                    Convert & Download
+                </button>
+            </div>
+        </div>
+        <input type="hidden" name="sentence_data">
+    </form>
+    <div class="control-template d-none">
+        <div class="side-controls" data-index="-1">
+            <a href="#" class="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ url_for('static', filename='dist/img/mic.png') }}">
+            </a>
+            <div class="dropdown-menu">
+                <h6 class="dropdown-header">Apply different voice</h6>
+                {% for voice in voices %}
+                    <button class="dropdown-item" type="button">{{ voice }}</button>
+                {% endfor %}
+            </div>
+            <a href="#" class="play-sentence">
+                <img src="{{ url_for('static', filename='dist/img/play-circle.png') }}">
+            </a>
+        </div>
+    </div>
+
+    <audio id="sentence-audio" src=""></audio>
+{% endblock %}
